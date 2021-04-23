@@ -1,0 +1,16 @@
+{
+    "name": "secure_cloud_server",
+    "description": "Secure Cloud Server",
+    "authors": "Kian Fay",
+    "version": "1.0.0",
+    "main": "app.js",
+    "dependencies": {
+        "express": "4.17.1",
+        "mongoose": "5.10.3",
+        "cookie-parser": "^1.4.5",
+        "morgan": "~1.9.1"
+    },
+    "scripts": {
+        "start": "node app.js"
+    }
+}
