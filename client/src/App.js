@@ -2,6 +2,8 @@ import React, {useState}  from "react";
 import './App.css';
 import MainButtons from "./main-buttons/MainButtons.js";
 import Download from "./download/Download.js"
+import Generate from "./generate/Generate.js"
+
 
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
     switch(view){
       case "Download":
         return <Download/>
+      case "Generate":
+        return <Generate/>
       default:
         break;
     }

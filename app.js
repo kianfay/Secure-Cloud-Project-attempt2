@@ -3,12 +3,46 @@ const https = require('https');
 const fs = require('fs');
 const port = 3030;
 
+initalKeyStore = 'public-key-store/initialStore.json';
+trueKeyStore = 'public-key-store/keys.json';
+
+////
+// Setting up an express API, with middleware to parse json body
 var app = express();
+app.use(express.json());
 
 app.get('/getPublicKeys', (req, res) => {
-  res.send("IT'S WORKING!")
+  res.json({
+    "itworks": "IT'S WORKING!"
+  })
 })
 
+// Fetches the public key store, and appends the new name-key pair
+app.post('/sendPublicKeyAndName', (req, res) => {
+  console.log(req.body);
+
+  fs.readFile(trueKeyStore, (err, currentPublicKeys) => {
+    var JSONcurrentPublicKeys;
+    if (err) {
+      JSONcurrentPublicKeys = JSON.parse(fs.readFileSync(initalKeyStore));
+    } else {
+      JSONcurrentPublicKeys = JSON.parse(currentPublicKeys);
+    }
+
+    JSONcurrentPublicKeys.keyNamePairs.push({
+      name: req.body.publicKey, 
+      publicKey: req.body.name
+    })
+
+    fs.writeFile(trueKeyStore, JSON.stringify(JSONcurrentPublicKeys), (err) => {
+      if(err) throw err;
+    })
+  })
+})
+
+
+////
+// Setting up the https server
 const httpsOptions = {
   key: fs.readFileSync('./security/cert.key'),
   cert: fs.readFileSync('./security/cert.pem')
@@ -16,19 +50,5 @@ const httpsOptions = {
 
 https.createServer(httpsOptions, app)
   .listen(port, () => {
-      console.log('server running at ' + port)
+      console.log('server running at ' + port);
   })
-
-/* // The first activates some more advanced logging, and then
-   // the subsequent lines allow for objects to be recieved
-   // by the express router through any verb, POST mostly however.
-  app.use(logger('dev'));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
-  app.use(cookieParser());
-  
-  // The main settings for the express app routing
-  app.use('/users', UserRoute);
-  app.use('/messagestore', MessageRoute);
-  app.set('port', 3030);
-  app.listen(3030); // http://localhost:3030/ */

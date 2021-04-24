@@ -33,7 +33,7 @@ function Download(props){
     function getDriveItem(id){
         axios.get("https://www.googleapis.com/drive/v3/files/" + id + "?alt=media&key=AIzaSyDvvV7UdBteW-MCcyCE5XapxnlVdO4hD90")
             .then( response => {
-                //This prints the contemt of the file to console, for demonstrative puropeses
+                //This prints the content of the file to console, for demonstrative puropeses
                 console.log(response.data)
             })
     }
