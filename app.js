@@ -38,6 +38,7 @@ app.post('/sendPublicKeyAndName', (req, res) => {
       if(err) throw err;
     })
   })
+  res.send("200 OK");
 })
 
 

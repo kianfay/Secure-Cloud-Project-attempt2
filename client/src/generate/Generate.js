@@ -19,12 +19,24 @@ function Generate(props){
 
     function generateKeyPair(){
         const keyPair = crypto.keyPair();
+
         var body = {
             "name": "sample",
             "publicKey": keyPair.publicKey
         }
         console.log(keyPair.publicKey)
         axios.post("/sendPublicKeyAndName", body)
+
+        DownloadLocalFile(keyPair.secretKey)
+    }
+
+    function DownloadLocalFile(data){
+        const element = document.createElement('a');
+        const file = new Blob([data]);
+        element.href = URL.createObjectURL(file);
+        element.download = "privatekey.key";
+        document.body.appendChild(element);
+        element.click();
     }
 }
 
