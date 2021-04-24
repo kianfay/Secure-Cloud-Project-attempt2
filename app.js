@@ -30,8 +30,8 @@ app.post('/sendPublicKeyAndName', (req, res) => {
     }
 
     JSONcurrentPublicKeys.keyNamePairs.push({
-      name: req.body.publicKey, 
-      publicKey: req.body.name
+      name: req.body.name, 
+      publicKey: req.body.publicKey,
     })
 
     fs.writeFile(trueKeyStore, JSON.stringify(JSONcurrentPublicKeys), (err) => {

@@ -5,6 +5,9 @@ import crypto from "asymmetric-crypto";
 
 function Generate(props){
 
+    
+    const [nameState, setNameState] = useState("")
+
     var infoLine = `Clicking this button automatically
                    generates a asymmetric key pair, downloads your private key
                    and sends your public key to the server with your name to be
@@ -12,6 +15,10 @@ function Generate(props){
 
     return(
         <div>
+            <input 
+                type="text"
+                placeholder="Enter name before generating key pair"
+                onInput={e => setNameState(e.target.value)}/>
             <h2>{infoLine}</h2>
             <Button onClick={generateKeyPair} >Click to generate a key-pair</Button>
         </div>
@@ -21,7 +28,7 @@ function Generate(props){
         const keyPair = crypto.keyPair();
 
         var body = {
-            "name": "sample",
+            "name": nameState,
             "publicKey": keyPair.publicKey
         }
         console.log(keyPair.publicKey)
@@ -38,6 +45,7 @@ function Generate(props){
         document.body.appendChild(element);
         element.click();
     }
+    
 }
 
 export default Generate;
