@@ -78,15 +78,18 @@ function Create(props){
 
         // Create a random asymmetric key
         var asyKey = keygen._();
+        console.log(asyKey)
 
         var newGroup = makeGroup(asyKey, finalKeyNamePairs);
 
         axios.post('/sendGroup', newGroup);
     }
 
-    // Creates an array of name to encrypted key pairs to be sent to the backend
+    // Creates an array of name to encrypted key pairs to be sent to the backend. We add a header
+    // to the key, which we must remember to remove after.
     function makeGroup(key, keyNamePairs){
-        var keys = keyNamePairs.map(x => [x[0], crypto.encrypt('some data', x[1], props.getPriv)])
+        var headerPlusKey = "OK" + key;
+        var keys = keyNamePairs.map(x => [x[0], crypto.encrypt(headerPlusKey, x[1], props.getPriv, x[1])])
 
         var group = {
             name: groupName,

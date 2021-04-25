@@ -27,6 +27,20 @@ app.get('/getPublicKeys', (req, res) => {
   })
 })
 
+app.post('/getSpecificGroup', (req, res) => {
+
+  fs.readFile(trueGroupStore, (err, currentGroups) => {
+    var JSONcurrentGroups;
+    if (err) {
+      console.log("A group store must be generated. Do this by generating a group at the frontend.")
+    } else {
+      JSONcurrentGroups = JSON.parse(currentGroups);
+    }
+    var specGroup = JSONcurrentGroups.groups.find(x => x.name == req.body.groupName)
+    res.json(specGroup);
+  })
+})
+
 // Fetches the public key store, and appends the new name-key pair
 app.post('/sendPublicKeyAndName', (req, res) => {
 

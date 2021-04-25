@@ -6,6 +6,8 @@ import Download from "./download/Download.js"
 import Generate from "./generate/Generate.js"
 import Create from "./create/Create.js";
 import Insert from "./insert/Insert.js";
+import Upload from "./upload/Upload.js";
+
 
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
         return <Create getPriv={privateKey} getPub={publicKey} getName={nameOfUser}/>
       case "Insert":
         return <Insert setPriv={setPrivateKey} setName={setnameOfUser}/>
+      case "Upload":
+        return <Upload getPriv={privateKey} setName={setnameOfUser} getName={nameOfUser}/>
       default:
         break;
     }
