@@ -2,7 +2,7 @@ import React, {useState}  from "react";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
 import assCrypto from "asymmetric-crypto";
-import {AES} from "crypto-js";
+import CryptoJS, {AES} from "crypto-js";
 
 var descLine = `Enter the group name, select a file, and click upload to 
                 upoad it to a public google drive folder`;
@@ -86,8 +86,11 @@ function Upload(props){
 
                 console.log(decryptedKey)
                 
-                var encryptedFile = AES.encrypt(fileToUpload, decryptedKey);
+                var encryptedFile = AES.encrypt(fileToUpload, decryptedKey).toString();
                 console.log(encryptedFile)
+
+                var decryptedFile = AES.decrypt(encryptedFile, decryptedKey).toString(CryptoJS.enc.Utf8);
+                console.log(decryptedFile)
 
             });
     }

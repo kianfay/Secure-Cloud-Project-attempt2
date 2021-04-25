@@ -1,6 +1,8 @@
 import React, {useState}  from "react";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
+import CryptoJS, {AES} from "crypto-js";
+
 
 const getListURL = "https://www.googleapis.com/drive/v3/files?q=%2710FeLrYyczM8yakVDQpfRjVGmOd2vXX_e%27%20in%20parents&key=AIzaSyDvvV7UdBteW-MCcyCE5XapxnlVdO4hD90"
 
@@ -35,6 +37,10 @@ function Download(props){
             .then( response => {
                 //This prints the content of the file to console, for demonstrative puropeses
                 console.log(response.data)
+
+                // Code to decrypt using CryptoJS
+                //var decryptedFile = AES.decrypt(encryptedFile, decryptedKey).toString(CryptoJS.enc.Utf8);
+                //console.log(decryptedFile)
             })
     }
 
