@@ -33,11 +33,11 @@ function Upload(props){
             <h3>{descLine}</h3>
             <input 
                 type="text" 
-                placholder="Enter group name"
+                placeholder="Enter group name"
                 onInput={e => setGroupName(e.target.value)}/>
-                <input type="file" onChange={e => {
-                    fileToBuffer(e.target.files[0]);
-                }}/>
+            <input type="file" onChange={e => {
+                fileToBuffer(e.target.files[0]);
+            }}/>
             <Button onClick={uploadFile} >Upload file</Button>
         </div>
     );

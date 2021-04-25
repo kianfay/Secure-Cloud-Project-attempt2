@@ -24,7 +24,7 @@ function App() {
   function getView(view){
     switch(view){
       case "Download":
-        return <Download getPriv={privateKey}/>
+        return <Download getPriv={privateKey} getName={nameOfUser}/>
       case "Generate":
         return <Generate setPub={setPublicKey} setPriv={setPrivateKey} setName={setnameOfUser}/>
       case "Create":
