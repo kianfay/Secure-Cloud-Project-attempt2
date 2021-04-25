@@ -3,7 +3,7 @@ import './App.css';
 import MainButtons from "./main-buttons/MainButtons.js";
 import Download from "./download/Download.js"
 import Generate from "./generate/Generate.js"
-
+import Create from "./create/Create.js";
 
 
 function App() {
@@ -20,6 +20,8 @@ function App() {
         return <Download/>
       case "Generate":
         return <Generate/>
+      case "Create":
+        return <Create/>
       default:
         break;
     }

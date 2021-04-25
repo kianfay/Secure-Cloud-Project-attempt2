@@ -12,6 +12,8 @@ function MainButtons(props){
           <Button onClick={() => props.toggleView('Insert')}>Insert private key</Button>
           <Button onClick={() => props.toggleView('Download')}>Download</Button>
           <Button onClick={() => props.toggleView('Upload')}>Upload</Button>
+          <Button onClick={() => props.toggleView('Create')}>Create group</Button>
+          <Button onClick={() => props.toggleView('Modify')}>Modify group</Button>
         </ButtonGroup>
     </div>
     );

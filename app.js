@@ -12,14 +12,20 @@ var app = express();
 app.use(express.json());
 
 app.get('/getPublicKeys', (req, res) => {
-  res.json({
-    "itworks": "IT'S WORKING!"
+  
+  fs.readFile(trueKeyStore, (err, currentPublicKeys) => {
+    var JSONcurrentPublicKeys;
+    if (err) {
+      console.log("A keystore must be generated. Do this by generating a key at teh frontend.")
+    } else {
+      JSONcurrentPublicKeys = JSON.parse(currentPublicKeys);
+    }
+    res.json(JSONcurrentPublicKeys);
   })
 })
 
 // Fetches the public key store, and appends the new name-key pair
 app.post('/sendPublicKeyAndName', (req, res) => {
-  console.log(req.body);
 
   fs.readFile(trueKeyStore, (err, currentPublicKeys) => {
     var JSONcurrentPublicKeys;
