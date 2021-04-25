@@ -1,5 +1,4 @@
 const express = require("express");
-const googleApi = require('./googleApiIndex')
 const https = require('https');
 const fs = require('fs');
 const port = 3030;
@@ -40,6 +39,12 @@ app.post('/getSpecificGroup', (req, res) => {
     var specGroup = JSONcurrentGroups.groups.find(x => x.name == req.body.groupName)
     res.json(specGroup);
   })
+})
+
+app.post('/uploadFile', (req, res) => {
+  require('./googleApiIndex')(req.body.name, req.body.file);
+  console.log(req.body)
+  res.send("200 OK")
 })
 
 // Fetches the public key store, and appends the new name-key pair

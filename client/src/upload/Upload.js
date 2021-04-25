@@ -7,7 +7,7 @@ import {AES} from "crypto-js";
 var descLine = `Enter the group name, select a file, and click upload to 
                 upoad it to a public google drive folder`;
 var keyStoreRoute = '/getPublicKeys';
-const uploadToDriveURI = "https://www.googleapis.com/upload/drive/v3/files/fileId"; 
+const uploadToDriveURI = "/uploadFile"; 
 
 
 function Upload(props){
@@ -90,7 +90,10 @@ function Upload(props){
                 var encryptedFile = AES.encrypt(fileToUpload, decryptedKey).toString();
                 console.log(encryptedFile)
 
-                axios.patch(uploadToDriveURI, encryptedFile)
+                axios.post(uploadToDriveURI, {
+                    name: "testfile.txt",
+                    file: encryptedFile
+                })
                     .then(response => {
                         console.log(response);
                     })
