@@ -78,6 +78,7 @@ function Create(props){
 
         // Create a random asymmetric key
         var asyKey = keygen._();
+        console.log("Asymmetric key for group: ")
         console.log(asyKey)
 
         var newGroup = makeGroup(asyKey, finalKeyNamePairs);
@@ -89,7 +90,7 @@ function Create(props){
     // to the key, which we must remember to remove after.
     function makeGroup(key, keyNamePairs){
         var headerPlusKey = "OK" + key;
-        var keys = keyNamePairs.map(x => [x[0], crypto.encrypt(headerPlusKey, x[1], props.getPriv, x[1])])
+        var keys = keyNamePairs.map(x => [x[0], crypto.encrypt(headerPlusKey, x[1], props.getPriv)])
 
         var group = {
             name: groupName,
