@@ -26,6 +26,9 @@ function Generate(props){
 
     function generateKeyPair(){
         const keyPair = crypto.keyPair();
+        props.setPub(keyPair.publicKey);
+        props.setPriv(keyPair.secretKey);
+        props.setName(nameState)
 
         var body = {
             "name": nameState,

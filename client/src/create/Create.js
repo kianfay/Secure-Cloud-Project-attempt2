@@ -1,6 +1,9 @@
 import React, {useState}  from "react";
 import axios from "axios";
 import Button from "react-bootstrap/esm/Button";
+import keygen from "keygenerator";
+import crypto from "asymmetric-crypto";
+
 
 var keyStoreRoute = '/getPublicKeys';
 var descLine = `Enter a name above, select which users
@@ -11,6 +14,8 @@ function Create(props){
     const [usersListStateToggle, setusersListStateToggle] = useState(false);
     const [usersListState, setusersListState] = useState([]);
     const [toggledUsers, settoggledUsers] = useState({});
+    const [groupName, setGroupName] = useState({});
+
 
 
     if(!usersListStateToggle){
@@ -39,6 +44,10 @@ function Create(props){
             </ol>  
             <div>
                 <h3>{descLine}</h3>
+                <input 
+                    type="text" 
+                    placholder="Enter group name"
+                    onInput={e => setGroupName(e.target.value)}/>
                 <Button onClick={createGroup} >Create group</Button>
             </div>
         </div>
@@ -64,8 +73,27 @@ function Create(props){
 
         // Ends up with an array of arrays, like [["Kanye", "l7dwmCaWX7Wr..."], ["kian", "faswmCaWX7Wr..."]]
         var finalKeyNamePairs = refinedToggledUsers.map(x => [x[0],reorderdPairs[x[0]]])
+        finalKeyNamePairs.push([props.getName, props.getPub])
         console.log(finalKeyNamePairs);
+
+        // Create a random asymmetric key
+        var asyKey = keygen._();
+
+        var encryptedKeys = asyKeyEncrypt(asyKey, finalKeyNamePairs);
+
     }
+
+    // Creates an array of name to encrypted key pairs to be sent to the backend
+    function asyKeyEncrypt(key, keyNamePairs){
+        var keys = keyNamePairs.map(x => [x[0], crypto.encrypt('some data', x[1], props.getPriv)])
+
+        var group = {
+            name: groupName,
+            keys: keys
+        }
+        console.log(group)
+    }
+    
 }
 
 
