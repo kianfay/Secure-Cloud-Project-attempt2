@@ -6,6 +6,9 @@ const port = 3030;
 initalKeyStore = 'public-key-store/initialStore.json';
 trueKeyStore = 'public-key-store/keys.json';
 
+initialGroupStore = 'group-store/initialStore.json';
+trueGroupStore = 'group-store/groups.json';
+
 ////
 // Setting up an express API, with middleware to parse json body
 var app = express();
@@ -47,6 +50,38 @@ app.post('/sendPublicKeyAndName', (req, res) => {
   res.send("200 OK");
 })
 
+app.post('/sendGroup', (req, res) => {
+
+  fs.readFile(trueGroupStore, (err, currentGroups) => {
+    var JSONcurrentGroups;
+    if (err) {
+      JSONcurrentGroups = JSON.parse(fs.readFileSync(initialGroupStore));
+    } else {
+      JSONcurrentGroups = JSON.parse(currentGroups);
+    }
+
+    if(checkFormatAndName(JSONcurrentGroups.groups, req.body)){
+      JSONcurrentGroups.groups.push(req.body)
+      fs.writeFile(trueGroupStore, JSON.stringify(JSONcurrentGroups), (err) => {
+        if(err) throw err;
+      })
+      res.send("200 OK");
+    } else {
+      console.log("Attempt made to overwrite a group")
+      res.send("409 Conflict");
+    }
+  })
+})
+
+function checkFormatAndName(groups, newGroup){
+  console.log(groups);
+  var takenNames = groups.map(x => x.name);
+  if(takenNames.includes(newGroup.name)){
+    return false;
+  } else {
+    return true;
+  }
+}
 
 ////
 // Setting up the https server
